@@ -6,7 +6,7 @@ Prototipo de aplicación web para la geolocalización de establecimientos educac
 
 ## Características
 
-- 🗺️ Mapa interactivo basado en Leaflet.js y OpenStreetMap
+- 🗺️ Mapa interactivo basado en HTML5 Canvas
 - 📍 Geolocalización de 15 establecimientos educacionales
 - 🎯 Marcadores personalizados según tipo de establecimiento:
   - 🏛️ Universidades e Institutos
@@ -48,8 +48,7 @@ El prototipo incluye datos de establecimientos educacionales representativos de 
 - HTML5
 - CSS3
 - JavaScript (ES6+)
-- [Leaflet.js](https://leafletjs.com/) - Biblioteca para mapas interactivos
-- [OpenStreetMap](https://www.openstreetmap.org/) - Datos cartográficos
+- Canvas API - Para renderizado del mapa interactivo
 
 ## Funcionalidades Futuras
 

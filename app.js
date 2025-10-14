@@ -87,7 +87,6 @@ function dibujarMapa() {
         // Dibujar icono
         ctx.font = '24px Arial';
         const icono = iconos[est.tipo];
-        const medida = ctx.measureText(icono);
         ctx.fillText(icono, pos.x - 12, pos.y + 8);
     });
     
