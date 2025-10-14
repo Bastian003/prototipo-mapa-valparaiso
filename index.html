@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototipo Mapa V Región</title>
+
+    <!-- 1. Leaflet CSS (para que el mapa se vea bien) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- 2. Tu CSS personalizado -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <img src="logo_pucv.jpg" alt="Logo" class="logo-header">
+            <div>
+                <h1>Mapa de Establecimientos Educacionales</h1>
+                <p>Prototipo desarrollado por Bastián Trejo Apablaza.</p>
+            </div>
+        </div>
+    </header>
+    <div id="filtros" style="padding: 10px 20px; background: #e8f0fe; display: flex; gap: 20px; align-items: center;">
+    <label>
+        Buscar colegio:
+        <input type="text" id="busqueda-nombre" placeholder="Ejemplo: San José" style="padding: 5px;">
+    </label>
+    <label>
+        Filtrar por comuna:
+        <select id="filtro-comuna" style="padding: 5px;">
+            <option value="">Todas</option>
+            <!-- Las opciones se llenarán dinámicamente -->
+        </select>
+    </label>
+
+    <label>
+        Filtrar por dependencia:
+        <select id="filtro-dependencia" style="padding: 5px;">
+            <option value="">Todas</option>
+            <option value="municipal">Municipal</option>
+            <option value="particular">Particular Subvencionado</option>
+        </select>
+    </label>
+    </div>
+
+    <main>
+        <!-- El panel de información (inicialmente oculto) -->
+        <div id="info-panel" class="panel-oculto">
+            <button id="close-btn">&times;</button>
+            <h2 id="info-nombre"></h2>
+            <p id="info-direccion"></p>
+            <hr>
+            <h3>Distancias (km)</h3>
+            <div id="info-details"></div>
+        </div>
+
+        <!-- El contenedor donde se renderizará el mapa -->
+        <div id="map"></div>
+    </main>
+    
+    <!-- 3. Leaflet JS (la librería del mapa) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- 4. Tu JavaScript (la lógica) -->
+    <script src="script.js"></script>
+
+</body>
+</html>
