@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Establecimientos Educacionales - Valparaíso</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Establecimientos Educacionales de Valparaíso</h1>
+            <p>Geolocalización de instituciones educativas en la Quinta Región</p>
+        </header>
+        
+        <div class="map-container">
+            <canvas id="map" width="800" height="600"></canvas>
+            
+            <div class="info-panel">
+                <h2>Información</h2>
+                <div id="establishment-info">
+                    <p>Haga clic en un establecimiento en el mapa para ver sus detalles.</p>
+                </div>
+                
+                <div class="stats">
+                    <h3>Estadísticas</h3>
+                    <div id="statistics"></div>
+                </div>
+                
+                <div class="legend">
+                    <h3>Leyenda</h3>
+                    <div class="legend-item">
+                        <span class="marker-icon escuela">📚</span>
+                        <span>Escuela</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="marker-icon liceo">🎓</span>
+                        <span>Liceo</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="marker-icon universidad">🏛️</span>
+                        <span>Universidad</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="marker-icon jardin">🌱</span>
+                        <span>Jardín Infantil</span>
+                    </div>
+                </div>
+                
+                <div class="establishment-list">
+                    <h3>Lista de Establecimientos</h3>
+                    <div id="establishment-list"></div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Prototipo de Geolocalización - Región de Valparaíso</p>
+        </footer>
+    </div>
+    
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

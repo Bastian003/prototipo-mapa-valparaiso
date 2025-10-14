@@ -1,0 +1,237 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header p {
+    font-size: 1.2em;
+    opacity: 0.95;
+}
+
+.map-container {
+    display: flex;
+    height: 600px;
+    position: relative;
+}
+
+#map {
+    flex: 1;
+    height: 100%;
+    background: #e3f2fd;
+    border: 2px solid #667eea;
+    cursor: crosshair;
+}
+
+.info-panel {
+    width: 350px;
+    background: #f8f9fa;
+    padding: 20px;
+    overflow-y: auto;
+    border-left: 3px solid #667eea;
+}
+
+.info-panel h2 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.info-panel h3 {
+    color: #764ba2;
+    margin: 20px 0 10px 0;
+    font-size: 1.2em;
+}
+
+#establishment-info {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+#establishment-info p {
+    line-height: 1.6;
+    color: #555;
+}
+
+#establishment-info .detail {
+    margin: 10px 0;
+}
+
+#establishment-info .detail strong {
+    color: #667eea;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.legend {
+    margin-top: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    padding: 8px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.marker-icon {
+    font-size: 1.5em;
+    margin-right: 10px;
+    width: 30px;
+    text-align: center;
+}
+
+footer {
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+footer p {
+    font-size: 0.95em;
+}
+
+/* Leaflet popup customization */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+}
+
+.leaflet-popup-content {
+    margin: 15px;
+    font-size: 14px;
+}
+
+.popup-title {
+    font-weight: bold;
+    color: #667eea;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.popup-type {
+    background: #667eea;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.stats {
+    margin: 20px 0;
+}
+
+.stats .stat-item {
+    background: white;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stats .stat-item .icon {
+    font-size: 1.5em;
+}
+
+.stats .stat-item .count {
+    font-weight: bold;
+    color: #667eea;
+    font-size: 1.2em;
+}
+
+.establishment-list {
+    margin-top: 20px;
+}
+
+.establishment-list .list-item {
+    background: white;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s;
+    font-size: 0.9em;
+}
+
+.establishment-list .list-item:hover {
+    transform: translateX(5px);
+    background: #e3f2fd;
+}
+
+.establishment-list .list-item .name {
+    font-weight: bold;
+    color: #667eea;
+}
+
+.establishment-list .list-item .type {
+    font-size: 0.85em;
+    color: #666;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .map-container {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    #map {
+        height: 400px;
+    }
+    
+    .info-panel {
+        width: 100%;
+        border-left: none;
+        border-top: 3px solid #667eea;
+    }
+    
+    header h1 {
+        font-size: 1.8em;
+    }
+    
+    header p {
+        font-size: 1em;
+    }
+}
