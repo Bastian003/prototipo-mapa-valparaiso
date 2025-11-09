@@ -17,32 +17,24 @@
         <div class="header-content">
             <img src="logo_pucv.jpg" alt="Logo" class="logo-header">
             <div>
-                <h1>Mapa de Establecimientos Educacionales</h1>
+                <h1>Mapa de Establecimientos Educacionales TP</h1>
                 <p>Prototipo desarrollado por Bastián Trejo Apablaza.</p>
             </div>
         </div>
     </header>
-    <div id="filtros" style="padding: 10px 20px; background: #e8f0fe; display: flex; gap: 20px; align-items: center;">
-    <label>
-        Buscar colegio:
-        <input type="text" id="busqueda-nombre" placeholder="Ejemplo: San José" style="padding: 5px;">
-    </label>
-    <label>
-        Filtrar por comuna:
-        <select id="filtro-comuna" style="padding: 5px;">
-            <option value="">Todas</option>
-            <!-- Las opciones se llenarán dinámicamente -->
-        </select>
-    </label>
-
-    <label>
-        Filtrar por dependencia:
-        <select id="filtro-dependencia" style="padding: 5px;">
-            <option value="">Todas</option>
-            <option value="municipal">Municipal</option>
-            <option value="particular">Particular Subvencionado</option>
-        </select>
-    </label>
+    
+    <div id="filtros" style="padding: 10px 20px; background: #e8f0fe; display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+        <label>
+            Buscar establecimiento:
+            <input type="text" id="busqueda-nombre" placeholder="Ejemplo: San José" style="padding: 5px;">
+        </label>
+        <label>
+            Filtrar por comuna:
+            <select id="filtro-comuna" style="padding: 5px;">
+                <option value="">Todas</option>
+                <!-- Las opciones se llenarán dinámicamente -->
+            </select>
+        </label>
     </div>
 
     <main>
@@ -52,7 +44,7 @@
             <h2 id="info-nombre"></h2>
             <p id="info-direccion"></p>
             <hr>
-            <h3>Distancias (km)</h3>
+            <h3>Información del Establecimiento</h3>
             <div id="info-details"></div>
         </div>
 
