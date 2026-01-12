@@ -1,0 +1,88 @@
+<header class="navbar">
+  <div class="header-left">
+    <img src="assets/logo_pucv.jpg" alt="Logo" class="logo-header">
+    <span class="proyecto-titulo">Mapa EMTP Red Futuro Tecnico</span>
+  </div>
+  <div class="header-right">
+    <div class="search-container">
+      <input type="text" [(ngModel)]="filterNombre" (input)="actualizarFiltros()" placeholder="Buscar establecimiento...">
+    </div>
+  </div>
+</header>
+
+<div class="app-container">
+  <aside class="sidebar" [class.collapsed]="isSidebarCollapsed">
+    <div class="sidebar-content">
+      <h3>Filtros de Búsqueda</h3>
+      
+      <div class="filter-group">
+        <label>Departamento Provincial</label>
+        <select [(ngModel)]="filterDeprov" (change)="actualizarFiltros()">
+          <option value="">Todos</option>
+          <option *ngFor="let d of deprovUnicos" [value]="d">{{d}}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Comuna</label>
+        <select [(ngModel)]="filterComuna" (change)="actualizarFiltros()">
+          <option value="">Todas</option>
+          <option *ngFor="let c of comunasUnicas" [value]="c">{{c}}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Nodo</label>
+        <select [(ngModel)]="filterNodo" (change)="actualizarFiltros()">
+          <option value="">Todos los Nodos</option>
+          <option value="hoteleria">Hotelería, Gastronomía y Turismo</option>
+          <option value="energia">Energía</option>
+          <option value="administracion">Administración</option>
+          <option value="agropecuaria">Agropecuaria</option>
+          <option value="construccion">Construcción</option>
+          <option value="industria">Industria 4.0</option>
+          <option value="pie_tp">PIE TP</option>
+        </select>
+      </div>
+    </div>
+  </aside>
+
+  <button id="toggle-sidebar" (click)="toggleSidebar()">
+    {{ isSidebarCollapsed ? '▶' : '◀' }}
+  </button>
+
+  <main class="content-area">
+    <div id="info-panel" *ngIf="selectedEst">
+      <button id="close-btn" (click)="selectedEst = null">&times;</button>
+      <h2>{{selectedEst.NOM_RBD}}</h2>
+      <p id="info-direccion"><strong>Dirección:</strong> {{selectedEst['Dirección_Establecimiento']}}</p>
+      <hr>
+      <div id="info-details">
+        <p>RBD: <span>{{selectedEst.RBD}}</span></p>
+        <p>DGV_RBD: <span>{{selectedEst.DGV_RBD}}</span></p>
+        <p>Provincia: <span>{{selectedEst.Provincia}}</span></p>
+        <p>Comuna: <span>{{selectedEst.Comuna}}</span></p>
+        <p>Departamento Provincial: <span>{{selectedEst['Departamento Provincial de Educación']}}</span></p>
+        <p>Área: <span>{{selectedEst.RURAL_RBD}}</span></p>
+        <p>PIE: <span>{{selectedEst.CONVENIO_PIE}}</span></p>
+        <p>PACE: <span>{{selectedEst.PACE}}</span></p>
+        
+        <div *ngIf="getEspecialidades(selectedEst).length > 0" class="especialidades-container">
+          <p class="espe-title">Especialidades:</p>
+          <ul>
+            <li *ngFor="let esp of getEspecialidades(selectedEst)">{{esp}}</li>
+          </ul>
+        </div>
+
+        <div *ngIf="getNodos(selectedEst).length > 0" class="especialidades-container">
+          <p class="espe-title">Nodos:</p>
+          <ul>
+            <li *ngFor="let nodo of getNodos(selectedEst)">{{nodo}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="map"></div>
+  </main>
+</div>
