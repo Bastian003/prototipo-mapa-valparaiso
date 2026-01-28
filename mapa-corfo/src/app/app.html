@@ -17,32 +17,44 @@
       
       <div class="filter-group">
         <label>Departamento Provincial</label>
-        <select [(ngModel)]="filterDeprov" (change)="actualizarFiltros()">
-          <option value="">Todos</option>
-          <option *ngFor="let d of deprovUnicos" [value]="d">{{d}}</option>
-        </select>
+        <div class="checkbox-container">
+          <div *ngFor="let d of deprovUnicos" class="checkbox-item">
+            <input type="checkbox" 
+                   [id]="'deprov-'+d" 
+                   [checked]="filterDeprovsSeleccionados.includes(d)"
+                   (change)="toggleSeleccion(filterDeprovsSeleccionados, d)">
+            <label [for]="'deprov-'+d">{{d}}</label>
+          </div>
+        </div>
       </div>
 
       <div class="filter-group">
         <label>Comuna</label>
-        <select [(ngModel)]="filterComuna" (change)="actualizarFiltros()">
-          <option value="">Todas</option>
-          <option *ngFor="let c of comunasUnicas" [value]="c">{{c}}</option>
-        </select>
+        <div class="checkbox-container">
+          <div *ngFor="let c of comunasFiltradasPorDeprov" class="checkbox-item">
+            <input type="checkbox" 
+                   [id]="'comuna-'+c" 
+                   [checked]="filterComunasSeleccionadas.includes(c)"
+                   (change)="toggleSeleccion(filterComunasSeleccionadas, c)">
+            <label [for]="'comuna-'+c">{{c}}</label>
+          </div>
+          <div *ngIf="comunasFiltradasPorDeprov.length === 0" style="font-size: 0.8em; color: #999; padding: 5px;">
+            No hay comunas disponibles para la selección actual.
+          </div>
+        </div>
       </div>
 
       <div class="filter-group">
         <label>Nodo</label>
-        <select [(ngModel)]="filterNodo" (change)="actualizarFiltros()">
-          <option value="">Todos los Nodos</option>
-          <option value="hoteleria">Hotelería, Gastronomía y Turismo</option>
-          <option value="energia">Energía</option>
-          <option value="administracion">Administración</option>
-          <option value="agropecuaria">Agropecuaria</option>
-          <option value="construccion">Construcción</option>
-          <option value="industria">Industria 4.0</option>
-          <option value="pie_tp">PIE TP</option>
-        </select>
+        <div class="checkbox-container">
+          <div *ngFor="let n of nombresNodosFiltro" class="checkbox-item">
+            <input type="checkbox" 
+                   [id]="'nodo-'+n.id" 
+                   [checked]="filterNodosSeleccionados.includes(n.id)"
+                   (change)="toggleSeleccion(filterNodosSeleccionados, n.id)">
+            <label [for]="'nodo-'+n.id">{{n.nombre}}</label>
+          </div>
+        </div>
       </div>
     </div>
   </aside>

@@ -20,14 +20,13 @@ export class AppComponent implements OnInit {
   selectedEst: any = null;
   
   filterNombre: string = '';
-  filterComuna: string = '';
-  filterDeprov: string = '';
-  filterNodo: string = '';
+  filterComunasSeleccionadas: string[] = [];
+  filterDeprovsSeleccionados: string[] = [];
+  filterNodosSeleccionados: string[] = [];
 
-  comunasUnicas: string[] = [];
-  deprovUnicos: string[] = [];
+  comunasUnicas: string[] = []; // Todas las comunas del JSON
+  deprovUnicos: string[] = []; // Todos los Deprov del JSON
 
-  // configuracion de cada nodo con sus codigos de especialidades y el pie_tp es con el RBD
   NODOS_MAP: any = {
     "hoteleria": ["61001", "61002", "61003", "63009", "63010", "63011"],
     "energia": ["53014", "53015", "58034", "58033", "58035", "51006"],
@@ -38,11 +37,33 @@ export class AppComponent implements OnInit {
     "pie_tp": ["14720", "1958", "1880", "1884", "1894", "1490", "1489", "1464", "14470", "1895"]
   };
 
+  nombresNodosFiltro = [
+    { id: 'hoteleria', nombre: 'Hotelería, Gastronomía y Turismo' },
+    { id: 'energia', nombre: 'Energía' },
+    { id: 'administracion', nombre: 'Administración' },
+    { id: 'agropecuaria', nombre: 'Agropecuaria' },
+    { id: 'construccion', nombre: 'Construcción' },
+    { id: 'industria', nombre: 'Industria 4.0' },
+    { id: 'pie_tp', nombre: 'PIE TP' }
+  ];
+
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private zone: NgZone) {}
 
   ngOnInit() {
     this.initMap();
     this.cargarDatos();
+  }
+
+  // Lógica para filtrar qué comunas mostrar en el sidebar
+  get comunasFiltradasPorDeprov(): string[] {
+    if (this.filterDeprovsSeleccionados.length === 0) {
+      return this.comunasUnicas;
+    }
+    // Retorna solo comunas que pertenezcan a los Deprov seleccionados
+    const filtradas = this.establecimientos
+      .filter(e => this.filterDeprovsSeleccionados.includes(e['Departamento Provincial de Educación']))
+      .map(e => e.Comuna);
+    return [...new Set(filtradas)].sort();
   }
 
   initMap() {
@@ -62,11 +83,8 @@ export class AppComponent implements OnInit {
           this.establecimientos = data;
           this.filtrados = [...data];
           this.espeDict = espeDict;
-
-          // Poblar listas de filtros
           this.comunasUnicas = [...new Set(data.map(e => e.Comuna))].sort() as string[];
           this.deprovUnicos = [...new Set(data.map(e => e['Departamento Provincial de Educación']))].sort() as string[];
-
           this.dibujarMarcadores(this.filtrados);
           this.cdr.detectChanges();
         });
@@ -88,24 +106,48 @@ export class AppComponent implements OnInit {
     });
   }
 
+  toggleSeleccion(lista: string[], valor: string) {
+    const index = lista.indexOf(valor);
+    if (index > -1) {
+      lista.splice(index, 1);
+    } else {
+      lista.push(valor);
+    }
+    
+    if (lista === this.filterDeprovsSeleccionados) {
+      this.limpiarComunasHuerfanas();
+    }
+    this.actualizarFiltros();
+  }
+
+  limpiarComunasHuerfanas() {
+    if (this.filterDeprovsSeleccionados.length > 0) {
+      const validas = this.comunasFiltradasPorDeprov;
+      this.filterComunasSeleccionadas = this.filterComunasSeleccionadas.filter(c => validas.includes(c));
+    }
+  }
+
   actualizarFiltros() {
     const busq = this.filterNombre.toLowerCase();
     this.filtrados = this.establecimientos.filter(est => {
       const mNombre = est.NOM_RBD.toLowerCase().includes(busq) || String(est.RBD).includes(busq);
-      const mComuna = !this.filterComuna || est.Comuna === this.filterComuna;
-      const mDeprov = !this.filterDeprov || est['Departamento Provincial de Educación'] === this.filterDeprov;
+      const mComuna = this.filterComunasSeleccionadas.length === 0 || this.filterComunasSeleccionadas.includes(est.Comuna);
+      const mDeprov = this.filterDeprovsSeleccionados.length === 0 || this.filterDeprovsSeleccionados.includes(est['Departamento Provincial de Educación']);
       
       let mNodo = true;
-      if (this.filterNodo) {
+      if (this.filterNodosSeleccionados.length > 0) {
         mNodo = false;
-        const cods = this.NODOS_MAP[this.filterNodo];
-        if (this.filterNodo === 'pie_tp') {
-          if (cods.includes(String(est.RBD))) mNodo = true;
-        } else {
-          for (let i = 1; i <= 11; i++) {
-            const val = String(est[`ESPE_${String(i).padStart(2, '0')}`]);
-            if (cods.includes(val)) { mNodo = true; break; }
+        for (const nodoId of this.filterNodosSeleccionados) {
+          const cods = this.NODOS_MAP[nodoId];
+          if (nodoId === 'pie_tp') {
+            if (cods.includes(String(est.RBD))) { mNodo = true; break; }
+          } else {
+            for (let i = 1; i <= 11; i++) {
+              const val = String(est[`ESPE_${String(i).padStart(2, '0')}`]);
+              if (cods.includes(val)) { mNodo = true; break; }
+            }
           }
+          if (mNodo) break;
         }
       }
       return mNombre && mComuna && mDeprov && mNodo;
@@ -126,9 +168,7 @@ export class AppComponent implements OnInit {
     const lista: string[] = [];
     for (let i = 1; i <= 11; i++) {
       const cod = String(est[`ESPE_${String(i).padStart(2, '0')}`]);
-      if (cod && cod !== "0") {
-        lista.push(this.espeDict[cod] || cod);
-      }
+      if (cod && cod !== "0") lista.push(this.espeDict[cod] || cod);
     }
     return lista;
   }
@@ -153,10 +193,7 @@ export class AppComponent implements OnInit {
       } else {
         for (let i = 1; i <= 11; i++) {
           const val = String(est[`ESPE_${String(i).padStart(2, '0')}`]);
-          if (cods.includes(val)) {
-            nombresNodos.push(mappingNombres[key]);
-            break;
-          }
+          if (cods.includes(val)) { nombresNodos.push(mappingNombres[key]); break; }
         }
       }
     });

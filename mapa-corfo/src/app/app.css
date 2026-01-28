@@ -1,4 +1,4 @@
-/*toda la pagina*/
+/* toda la pagina */
 html, body { 
     margin: 0; 
     padding: 0; 
@@ -14,8 +14,7 @@ body {
     background-color: #f0f2f5; 
 }
 
-/*barra de busqueda,logo y titulo*/
-
+/* barra de busqueda, logo y titulo */
 .navbar { 
     background-color: #0056b3; 
     color: white; 
@@ -41,7 +40,7 @@ body {
 
 .search-container input { padding: 10px 18px; border-radius: 25px; border: none; width: 280px; outline: none; font-size: 0.9em; }
 
-/*filtros y diseño escritorio*/
+/* filtros y diseño escritorio */
 .app-container { display: flex; flex: 1; height: calc(100vh - 65px); position: relative; overflow: hidden; }
 
 .sidebar { 
@@ -53,29 +52,57 @@ body {
     z-index: 1500; 
     box-sizing: border-box; 
     flex-shrink: 0; 
+    /* Permite scroll si la pantalla es extremadamente pequeña */
+    overflow-y: auto; 
 }
 .sidebar.collapsed { margin-left: -300px; }
 
 .sidebar h3 { 
     margin-top: 0; 
     color: #1a1a1a; 
-    font-size: 1.2em; 
-    padding-bottom: 12px; 
-    margin-bottom: 25px; 
+    font-size: 1.1em; 
+    padding-bottom: 8px; 
+    margin-bottom: 15px; 
     border-bottom: 3px solid #0056b3; 
 }
 
-.filter-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-.filter-group label { font-size: 0.9em; font-weight: 700; color: #666; }
-.filter-group select { 
-    padding: 12px; 
-    border: 1px solid #ccc; 
-    border-radius: 8px; 
-    background-color: #fcfcfc; 
-    font-size: 0.95em; 
-    width: 100%; 
-    color: #333;
+/* Compactado el espacio entre filtros para que suba el de Nodos */
+.filter-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+.filter-group label { font-size: 0.85em; font-weight: 700; color: #666; }
+
+/* ALTURA OPTIMIZADA PARA QUE QUEPA EN PC SIN F11 */
+.checkbox-container {
+    max-height: 100px; /* Reducido de 130px a 100px */
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: #fcfcfc;
 }
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.checkbox-item input {
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+}
+
+.checkbox-item label {
+    font-size: 0.8em;
+    font-weight: 500 !important;
+    color: #333 !important;
+    cursor: pointer;
+}
+
+/* Scrollbar personalizada */
+.checkbox-container::-webkit-scrollbar { width: 4px; }
+.checkbox-container::-webkit-scrollbar-thumb { background: #0056b3; border-radius: 10px; }
 
 #toggle-sidebar { 
     position: absolute; 
@@ -97,7 +124,7 @@ body {
 }
 .sidebar.collapsed + #toggle-sidebar { left: 0; }
 
-/*fichas tecnicas PC*/
+/* fichas tecnicas PC */
 #info-panel {
     position: absolute;
     top: 50%;
@@ -137,54 +164,23 @@ body {
 
 #close-btn { position: absolute; top: 12px; right: 12px; background: #eee; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-weight: bold; font-size: 18px; color: #666; display: flex; align-items: center; justify-content: center; }
 
-/*MAPA */
+/* MAPA */
 .content-area { flex-grow: 1; position: relative; height: 100%; width: 100%; }
 #map { width: 100%; height: 100%; z-index: 1; }
 
-/*Cambios solamente para celular*/
+/* Cambios solamente para celular */
 @media (max-width: 768px) {
     .navbar { height: 60px; padding: 0 10px; }
-    
-    
-    
-    .proyecto-titulo { 
-        display: block !important; 
-        font-size: 0.7em;   
-        position: static;   
-        top: 0; 
-        padding: 0;
-        margin: 0;
-        line-height: 1.2;
-        white-space: nowrap;
-    }
-
-    .logo-header { 
-        height: 35px;       
-        width: auto;
-    }
-
-    .search-container input { 
-        width: 120px; 
-        padding: 6px 10px;
-        font-size: 0.8em;
-    }
-
-    .sidebar { 
-        position: absolute; 
-        height: 100%; 
-        width: 220px; 
-    }
+    .proyecto-titulo { display: block !important; font-size: 0.7em; position: static; top: 0; padding: 0; margin: 0; line-height: 1.2; white-space: nowrap; }
+    .logo-header { height: 35px; width: auto; }
+    .search-container input { width: 120px; padding: 6px 10px; font-size: 0.8em; }
+    .sidebar { position: absolute; height: 100%; width: 220px; padding: 15px; }
     .sidebar.collapsed { margin-left: -220px; }
     #toggle-sidebar { left: 220px; }
     .sidebar.collapsed + #toggle-sidebar { left: 0; }
-
-    #info-panel { 
-        width: 85%; 
-        max-width: 300px; 
-        max-height: 80%;
-        padding: 15px; 
-    }
-
+    #info-panel { width: 85%; max-width: 300px; max-height: 80%; padding: 15px; }
     #info-details p { font-size: 0.8em; }
     #info-panel h2 { font-size: 1em; }
+    /* Altura más pequeña de checkboxes en móvil para dejar ver el mapa */
+    .checkbox-container { max-height: 80px; } 
 }
