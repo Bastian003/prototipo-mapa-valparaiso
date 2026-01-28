@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "mapa-corfo": {
+    "prototipo-mapa-valparaiso": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
